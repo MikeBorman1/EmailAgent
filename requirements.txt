@@ -1,0 +1,10 @@
+fastapi==0.101.1
+langchain==0.0.268
+pandas==2.0.3
+pinecone_client==2.2.2
+pydantic
+python-dotenv==1.0.0
+uvicorn
+tiktoken
+openai
+
