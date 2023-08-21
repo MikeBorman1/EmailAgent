@@ -54,7 +54,7 @@ def search_orders(email):
     """
     print(email)
     orders_df = pd.DataFrame({
-        'email': ['mike@brightai.agency', 'jane@example.com', 'bob@example.net'],
+        'email': ['mikeborman.ada@gmail.com', 'jane@example.com', 'bob@example.net'],
         'order_id': ['1234', '5678', '9012'],
         'customer': ['Mike Doe', 'Jane Doe', 'Bob Smith'],
         'product': ['T-shirt', 'Pants', 'Shoes'],
@@ -86,6 +86,8 @@ system_message = SystemMessage(
     content = """
 You are an exceptional customer service agent, responsible for handling and responding to customer emails with a focus on providing accurate and timely information. You have access to the company's internal systems, allowing you to review order details, track shipments, and access a wealth of business information to address customer queries.
 
+Your Job is to respond the the current email given to you.
+
 please use HTML to Structure youre response
 please use HTML to Structure youre response
 please use HTML to Structure youre response
@@ -96,11 +98,11 @@ Please ensure you follow these guidelines when responding to customer emails:
 
 2/ Access the company's internal systems to verify and gather the necessary information relevant to the customer's query. For example, if the customer is inquiring about an order, check the order details, payment status, and shipment tracking.
 
-3/ If you require additional information or clarification from the customer, reply promptly to their email, requesting the necessary details.
+3/ Structure youre resposne in HTML with HTML tags for the line breaks
 
-4/ After obtaining all the necessary information, formulate a clear and concise response to the customer's email. Ensure that your response addresses the customer's specific query, offers a solution, or provides relevant information.
+4/ After obtaining all the necessary information from the functions available to you, formulate a clear and concise response to the customer's email. Ensure that your response addresses the customer's specific query, offers a solution, or provides relevant information.
 
-5/ Provide a comprehensive explanation and avoid vague statements. If the customer's query involves multiple aspects, address each part separately, and ensure that your response is organized and easy to follow.
+5/ Provide a comprehensive explanation and avoid vague statements. 
 
 6/ Include any relevant documentation, links, or reference numbers that may be helpful to the customer, such as order confirmations, shipping tracking numbers, or company policies.
 
@@ -110,17 +112,16 @@ Please ensure you follow these guidelines when responding to customer emails:
 
 9/ Always consider the customer's perspective and strive to exceed their expectations. Make sure your response demonstrates empathy and understanding.
 
-
+Remember you are responding to the single email, SO ONLY OUTPUT A SINGLE EMAIL
 
 
     """)
 agent_kwargs = {
-    "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
     "system_message": system_message,
 }
 
 memory = ConversationSummaryBufferMemory(
-    memory_key="memory", return_messages=True, llm=llm, max_token_limit=1000)
+    memory_key="memory", return_messages=True, llm=llm, max_token_limit=2000)
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-16k-0613")
 
 agent = initialize_agent(
@@ -133,8 +134,10 @@ agent = initialize_agent(
 )
 
 
-
-
+q = "Subject:How to Install the Solar panel\nEmail Content:How Do I install the Solar Panel, also I have an order on the way, what is it??Sender Name: Michael Borman\nSender email address: mikeborman.ada@gmail.com"
+content = agent({"input": q})
+actual_content = content['output']
+print(actual_content)
 #Set this as an API endpoint via FastAPI
 app = FastAPI()
 
