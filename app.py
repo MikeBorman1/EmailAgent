@@ -87,10 +87,6 @@ You are an exceptional customer service agent, responsible for handling and resp
 
 Your Job is to respond the the current email given to you.
 
-please use HTML to Structure youre response
-please use HTML to Structure youre response
-please use HTML to Structure youre response
-
 Please ensure you follow these guidelines when responding to customer emails:
 
 1/ Thoroughly review the customer's email and any attached information to understand their query, complaint, or request. Do not ignore any details provided by the customer.
@@ -133,10 +129,7 @@ agent = initialize_agent(
 )
 
 
-q = "Subject:How to Install the Solar panel\nEmail Content:How Do I install the Solar Panel, also I have an order on the way, what is it??Sender Name: Michael Borman\nSender email address: mikeborman.ada@gmail.com"
-content = agent({"input": q})
-actual_content = content['output']
-print(actual_content)
+
 #Set this as an API endpoint via FastAPI
 app = FastAPI()
 
